@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "seq": 7,
+  "updatedAt": "2026-11-01T13:25:00.000Z",
+  "runner": { "pid": 4242, "startedAt": "2026-11-01T13:02:27.986Z" },
+  "repository": "ms007/skool",
+  "spec": { "number": 60, "title": "Admin-Listen", "url": "https://github.com/ms007/skool/issues/60" },
+  "standalone": false,
+  "tickets": [
+    { "number": 65, "title": "Schon erledigt", "url": "https://github.com/ms007/skool/issues/65", "state": "alreadyDone" },
+    { "number": 66, "title": "Liste der Mitglieder", "url": "https://github.com/ms007/skool/issues/66", "state": "landed" },
+    { "number": 67, "title": "Filter nach Rolle", "url": "https://github.com/ms007/skool/issues/67", "state": "active" },
+    { "number": 68, "title": "Export als CSV", "url": "https://github.com/ms007/skool/issues/68", "state": "pending" }
+  ],
+  "active": {
+    "ticket": 67,
+    "phase": "reviewing",
+    "attempt": 2,
+    "maxAttempts": 3,
+    "phaseStartedAt": "2026-11-01T13:25:00.000Z",
+    "logPath": "/tmp/x/issue-67-review-2.log"
+  },
+  "result": null
+}

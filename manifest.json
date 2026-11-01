@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "id": "ms007.omarchy-sandcastle-shell",
+  "name": "Sandcastle",
+  "version": "0.1.0",
+  "author": "ms007",
+  "description": "Shows a running Sandcastle spec run in the bar: tickets, current phase and whether the agent is still alive",
+  "kinds": ["bar-widget", "service"],
+  "entryPoints": { "barWidget": "BarWidget.qml", "service": "Service.qml" },
+  "barWidget": {
+    "displayName": "Sandcastle",
+    "description": "Status of the running Sandcastle spec run",
+    "category": "AI",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "schema": [
+      { "key": "projectPath", "type": "string", "label": "Project path", "defaultValue": "~/Projects/skool" },
+      { "key": "stallWarnMinutes", "type": "integer", "label": "Warn after minutes without agent output", "min": 1, "max": 60, "step": 1, "defaultValue": 5 }
+    ],
+    "defaults": { "projectPath": "~/Projects/skool", "stallWarnMinutes": 5 }
+  }
+}
