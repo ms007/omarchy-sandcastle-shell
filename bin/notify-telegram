@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Sends one notification to Telegram via your own bot.
+# Usage: notify-telegram <title> [body] [url]
+# Does nothing when the repo's .env is missing or incomplete.
+set -euo pipefail
+
+env_file="$(dirname "$(readlink -f "$0")")/../.env"
+[[ -f $env_file ]] || exit 0
+# shellcheck source=/dev/null
+source "$env_file"
+[[ -n ${TELEGRAM_BOT_TOKEN:-} && -n ${TELEGRAM_CHAT_ID:-} ]] || exit 0
+
+text="$1"
+[[ -n ${2:-} ]] && text+=$'\n'"$2"
+[[ -n ${3:-} ]] && text+=$'\n'"$3"
+
+curl -fsS --max-time 20 "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage" \
+  --data-urlencode "chat_id=$TELEGRAM_CHAT_ID" \
+  --data-urlencode "text=$text" \
+  --data-urlencode "disable_web_page_preview=true" >/dev/null 2>&1 \
+  || logger -t omarchy-shell "sandcastle-shell: Telegram notification failed"

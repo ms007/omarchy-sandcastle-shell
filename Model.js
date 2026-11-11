@@ -260,21 +260,24 @@ function notificationsFor(prev, next) {
         title: "Sandcastle: Spec #" + spec.number + " fertig",
         body: summaryBody(r.summary),
         url: String(spec.url || ""),
-        urgency: "normal"
+        urgency: "normal",
+        runEnd: true
       })
     } else if (r.kind === "limit") {
       out.push({
         title: "Sandcastle: Limit erreicht",
         body: "Spec #" + spec.number + " angehalten. Ein neuer Run macht dort weiter.",
         url: String(spec.url || ""),
-        urgency: "critical"
+        urgency: "critical",
+        runEnd: true
       })
     } else if (r.kind === "error") {
       out.push({
         title: "Sandcastle: Run fehlgeschlagen",
         body: String(r.message || "Unbekannter Fehler"),
         url: String(spec.url || ""),
-        urgency: "critical"
+        urgency: "critical",
+        runEnd: true
       })
     }
     // "aborted" is a Ctrl+C by the developer: nothing to tell them.
@@ -288,7 +291,8 @@ function crashNotification(snapshot) {
     title: "Sandcastle: Run abgebrochen",
     body: "Der Runner für Spec #" + spec.number + " ist ohne Abschluss beendet worden.",
     url: String(spec.url || ""),
-    urgency: "critical"
+    urgency: "critical",
+    runEnd: true
   }
 }
 

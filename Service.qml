@@ -103,8 +103,14 @@ Item {
     root.snapshot = next
   }
 
+  // The end of a run (finished, limit, error, crash) also goes to Telegram;
+  // the script does nothing without a .env.
+  readonly property string telegramScript:
+    decodeURIComponent(String(Qt.resolvedUrl("bin/notify-telegram")).replace(/^file:\/\//, ""))
+
   function notify(n) {
     Quickshell.execDetached(Model.notificationArgv(root.omarchyPath, n))
+    if (n.runEnd) Quickshell.execDetached([root.telegramScript, n.title, n.body || "", n.url || ""])
   }
 
   function markOutput() {

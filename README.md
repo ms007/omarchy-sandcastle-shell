@@ -20,6 +20,17 @@ Notifications, each one sent once even with several monitors:
 
 A Ctrl+C in the runner sends nothing.
 
+### Telegram
+
+The end of a run (finished, limit reached, error, crash) can also go to Telegram through your own bot:
+
+1. Create a bot with @BotFather (`/newbot`) and keep the token.
+2. Send your bot any message, then read your chat ID from `"chat":{"id":...}` in `curl -s "https://api.telegram.org/bot<TOKEN>/getUpdates"`.
+3. `cp .env.example .env` and fill in `TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID`.
+4. Test it: `bin/notify-telegram "Test" "Hallo"`
+
+`bin/notify-telegram` reads `.env` on every call, so no restart is needed. Without `.env` nothing is sent. `.env` is git-ignored. Failures go to `journalctl -t omarchy-shell`.
+
 ## How it gets its data
 
 The runner writes `.sandcastle/logs/spec-<N>-<ts>/status.json` on every state change (schema version 1). The widget never calls GitHub. Everything is event driven:

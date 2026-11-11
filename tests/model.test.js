@@ -113,6 +113,7 @@ test("notificationsFor: a newly failed ticket", () => {
   assert.equal(out.length, 1)
   assert.equal(out[0].title, "Sandcastle: #67 braucht dich")
   assert.equal(out[0].url, "https://github.com/ms007/skool/issues/67")
+  assert.ok(!out[0].runEnd)
   // Seen already: no second notification.
   assert.equal(Model.notificationsFor(next, next).length, 0)
 })
@@ -128,12 +129,16 @@ test("notificationsFor: run results", () => {
   assert.match(done.body, /2 gelandet · 0 zurückgegeben · 0 übersprungen/)
   assert.match(done.body, /rebased/)
   assert.equal(done.url, "https://github.com/ms007/skool/issues/60")
+  assert.equal(done.runEnd, true)
 
   const limit = Model.notificationsFor(prev, with_(prev, { result: { kind: "limit" } }))
   assert.equal(limit[0].title, "Sandcastle: Limit erreicht")
+  assert.equal(limit[0].runEnd, true)
 
   const error = Model.notificationsFor(prev, with_(prev, { result: { kind: "error", message: "boom" } }))
   assert.equal(error[0].body, "boom")
+  assert.equal(error[0].runEnd, true)
+  assert.equal(Model.crashNotification(prev).runEnd, true)
 
   assert.equal(Model.notificationsFor(prev, with_(prev, { result: { kind: "aborted" } })).length, 0)
 })
